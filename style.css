@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#myCanvas{
+    background-color: rgb(48, 55, 67);
+}
