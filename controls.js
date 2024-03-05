@@ -18,15 +18,17 @@ class Controls {
             const x = event.offsetX;
             const y = event.offsetY;
 
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    if (
-                        x >= (this.x + this.linePart * j) &&
-                        x <= (this.x + this.linePart * (j + 1)) &&
-                        y >= (this.y + this.linePart * i) &&
-                        y <= (this.y + this.linePart * (i + 1))
-                    ) {
-                        this.keyLocation(this.keymap[i][j]);
+            if (!this.isStop) {
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        if (
+                            x >= (this.x + this.linePart * j) &&
+                            x <= (this.x + this.linePart * (j + 1)) &&
+                            y >= (this.y + this.linePart * i) &&
+                            y <= (this.y + this.linePart * (i + 1))
+                        ) {
+                            this.keyLocation(this.keymap[i][j]);
+                        }
                     }
                 }
             }
