@@ -1,5 +1,5 @@
 class Board {
-    constructor(x, y) {
+    constructor(x, y, canvas) {
         this.x = x;
         this.y = y;
         this.size = 400;
@@ -10,9 +10,10 @@ class Board {
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
         [0, 4, 8], [2, 4, 6]];
         this.win = { symbol: null, matrix: [] };
-        this.pawn = new Pawn(this.x, this.y, this.size, this.linePart);
-        this.controls = new Controls();
         this.createNew = false;
+        this.canvas = canvas;
+        this.pawn = new Pawn(this.x, this.y, this.size, this.linePart);
+        this.controls = new Controls(this.canvas, this.x, this.y, this.linePart);
     }
 
     update() {
@@ -39,13 +40,13 @@ class Board {
         if (!this.controls.inputs.includes(-1) && (this.win.symbol == null)) {
             this.win.symbol = -1
             setTimeout(() => {
-                this.createNew=true;
+                this.createNew = true;
             }, 2000);
         }
 
-        if(this.win.symbol != null){
+        if (this.win.symbol != null) {
             setTimeout(() => {
-                this.createNew=true;
+                this.createNew = true;
             }, 2000);
         }
     }

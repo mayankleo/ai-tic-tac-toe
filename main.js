@@ -1,16 +1,16 @@
-const myCanvas=document.getElementById('myCanvas');
-myCanvas.width=500;
-myCanvas.height=500;
+const myCanvas = document.getElementById('myCanvas');
+myCanvas.width = 500;
+myCanvas.height = 500;
 ctx = myCanvas.getContext('2d');
 
-var board = new Board(50,50);
+var board = new Board(50, 50, myCanvas);
 
-function animate(){
+function animate() {
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-     if(board.createNew){
+    if (board.createNew) {
         delete board;
-        board = new Board(50,50);
-     }
+        board = new Board(50, 50, myCanvas);
+    }
     board.draw(ctx);
     requestAnimationFrame(animate);
 }
