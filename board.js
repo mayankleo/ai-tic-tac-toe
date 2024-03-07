@@ -14,7 +14,6 @@ class Board {
         this.canvas = canvas;
         this.pawn = new Pawn(this.x, this.y, this.size, this.linePart);
         this.controls = new Controls(this.canvas, this.x, this.y, this.linePart);
-        this.ai = new NeuralNetwork([8,16,16,8]);
     }
 
     update() {

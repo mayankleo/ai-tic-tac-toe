@@ -49,7 +49,7 @@ class Level {
         for (let i = 0; i < level.outputs.length; i++) {
             let sum = 0;
             for (let j = 0; j < level.inputs.length; j++) {
-                sum += level.inputs[i] * level.weights[j][i];
+                sum += level.inputs[j] * level.weights[j][i];
             }
             // if (sum > level.biases[i]) {
             //     level.outputs[i]=1
@@ -58,9 +58,10 @@ class Level {
             // }
             level.outputs[i] = sum + level.biases[i]
         }
-
+        
         level.outputs = scaleArray(level.outputs);
+        // console.log('level.inputs :>> ', level.inputs);
+        // console.log('level.outputs :>> ', level.outputs);
         return level.outputs;
     }
 }
-

@@ -1,12 +1,13 @@
 class Controls {
     constructor(canvas, x, y, linePart) {
+        this.canvas = canvas;
         this.x = x;
         this.y = y;
         this.linePart = linePart;
+        this.ai = this.ai = new NeuralNetwork([9, 18, 18, 9]);
         this.inputs = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
         this.symbol = 0;
         this.isStop = false;
-        this.canvas = canvas;
         this.keymap = [[7, 8, 9], [4, 5, 6], [1, 2, 3]]
 
         // this.#addKeyboardListeners();
@@ -43,15 +44,23 @@ class Controls {
         }
     }
 
+    // flip(index) {
+    //     if (this.inputs[index] == -1) {
+    //         this.inputs[index] = this.symbol;
+    //     }
+    //     if (this.symbol == 0) {
+    //         this.symbol = 1;
+    //     } else {
+    //         this.symbol = 0;
+    //     }
+    // }
     flip(index) {
         if (this.inputs[index] == -1) {
             this.inputs[index] = this.symbol;
         }
-        if (this.symbol == 0) {
-            this.symbol = 1;
-        } else {
-            this.symbol = 0;
-        }
+        const output = NeuralNetwork.feedForward(this.inputs, this.ai);
+        console.log('output :>> ', output);
+        this.inputs[output.indexOf(Math.max(...output))] = 1;
     }
 
     keyLocation(key) {
