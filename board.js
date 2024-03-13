@@ -19,11 +19,11 @@ class Board {
     update() {
         for (let i = 0; i < this.winPatterns.length; i++) {
             if (
-                this.controls.inputs[this.winPatterns[i][0]] == 0 &&
-                this.controls.inputs[this.winPatterns[i][1]] == 0 &&
-                this.controls.inputs[this.winPatterns[i][2]] == 0
+                this.controls.inputs[this.winPatterns[i][0]] == -1 &&
+                this.controls.inputs[this.winPatterns[i][1]] == -1 &&
+                this.controls.inputs[this.winPatterns[i][2]] == -1
             ) {
-                this.win.symbol = 0;
+                this.win.symbol = -1;
                 this.win.matrix = this.winPatterns[i];
                 this.controls.isStop = true;
             } else if (
@@ -33,12 +33,13 @@ class Board {
             ) {
                 this.win.symbol = 1;
                 this.win.matrix = this.winPatterns[i];
+                localStorage.setItem("bestBrain",JSON.stringify(this.controls.ai));
                 this.controls.isStop = true;
             }
         }
 
-        if (!this.controls.inputs.includes(-1) && (this.win.symbol == null)) {
-            this.win.symbol = -1
+        if (!this.controls.inputs.includes(0) && (this.win.symbol == null)) {
+            this.win.symbol = 0
             setTimeout(() => {
                 this.createNew = true;
             }, 2000);
@@ -78,7 +79,7 @@ class Board {
         ctx.stroke();
 
         for (let i = 0; i < 9; i++) {
-            if (this.controls.inputs[i] == 0) {
+            if (this.controls.inputs[i] == -1) {
                 this.pawn.drawCircle(ctx, i);
             } else if (this.controls.inputs[i] == 1) {
                 this.pawn.drawCross(ctx, i);

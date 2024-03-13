@@ -4,14 +4,15 @@ class Controls {
         this.x = x;
         this.y = y;
         this.linePart = linePart;
-        this.ai = this.ai = new NeuralNetwork([9, 18, 18, 9]);
-        this.inputs = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
-        this.symbol = 0;
+        this.ai = this.ai = new NeuralNetwork([9, 9, 9]);
+        this.inputs = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.symbol = -1;
         this.isStop = false;
         this.keymap = [[7, 8, 9], [4, 5, 6], [1, 2, 3]]
 
         // this.#addKeyboardListeners();
         this.#addClickListeners();
+        // this.#autorun();
     }
 
     #addClickListeners() {
@@ -44,23 +45,57 @@ class Controls {
         }
     }
 
+    async #autorun() {
+        do {
+            if (!this.isStop) {
+                var elArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+                do {
+                    var el = pickRandom(elArr);
+                } while (this.inputs[el] != 0);
+                this.inputs[el] = -1
+                deleteByValue(elArr, el);
+            }
+            await delayFunction();
+            if (!this.isStop) {
+                const output = NeuralNetwork.feedForward(this.inputs, this.ai);
+                // console.table(output)
+                var outputIndex = findElementsSorted(output);
+                counterLoop: for (let i = 0; i < outputIndex.length; i++) {
+                    if (this.inputs[outputIndex[i]] == 0) {
+                        this.inputs[outputIndex[i]] = 1;
+                        deleteByValue(elArr, outputIndex);
+                        break counterLoop;
+                    }
+                }
+            }
+            await delayFunction();
+        } while (elArr.length != 0);
+    }
+
     // flip(index) {
-    //     if (this.inputs[index] == -1) {
+    //     if (this.inputs[index] == 0) {
     //         this.inputs[index] = this.symbol;
     //     }
-    //     if (this.symbol == 0) {
+    //     if (this.symbol == -1) {
     //         this.symbol = 1;
     //     } else {
-    //         this.symbol = 0;
+    //         this.symbol = -1;
     //     }
     // }
     flip(index) {
-        if (this.inputs[index] == -1) {
-            this.inputs[index] = this.symbol;
+        if (this.inputs[index] == 0) {
+            this.inputs[index] = -1;
         }
-        const output = NeuralNetwork.feedForward(this.inputs, this.ai);
-        console.log('output :>> ', output);
-        this.inputs[output.indexOf(Math.max(...output))] = 1;
+
+        // const output = NeuralNetwork.feedForward(this.inputs, this.ai);
+        // console.log('output :>> ', output);
+        // var outputIndex = output.indexOf(Math.max(...output));
+        // if (this.inputs[outputIndex] == 0) {
+        //     this.inputs[outputIndex] = 1;
+        // }
+
+        let algo = minimax(this.inputs, 1);
+        this.inputs[algo.index] = 1;
     }
 
     keyLocation(key) {

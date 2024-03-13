@@ -51,17 +51,11 @@ class Level {
             for (let j = 0; j < level.inputs.length; j++) {
                 sum += level.inputs[j] * level.weights[j][i];
             }
-            // if (sum > level.biases[i]) {
-            //     level.outputs[i]=1
-            // }else{
-            //     level.outputs[i]=0
-            // }
+
             level.outputs[i] = sum + level.biases[i]
         }
         
-        level.outputs = scaleArray(level.outputs);
-        // console.log('level.inputs :>> ', level.inputs);
-        // console.log('level.outputs :>> ', level.outputs);
+        level.outputs = sigmoidArray(level.outputs);
         return level.outputs;
     }
 }

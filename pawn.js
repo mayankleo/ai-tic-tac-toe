@@ -25,14 +25,14 @@ class Pawn {
         return cord;
     }
 
-    drawCircle(ctx, index = 0) {
+    drawCircle(ctx, index) {
         ctx.beginPath();
         ctx.arc(this.coordinates[index].x, this.coordinates[index].y, this.radius, 0, 2 * Math.PI);
         ctx.strokeStyle = this.circleColor;
         ctx.stroke();
     }
 
-    drawCross(ctx, index = 0) {
+    drawCross(ctx, index) {
         ctx.beginPath();
         ctx.moveTo(this.coordinates[index].x - this.radius, this.coordinates[index].y - this.radius);
         ctx.lineTo(this.coordinates[index].x + this.radius, this.coordinates[index].y + this.radius);
@@ -57,7 +57,7 @@ class Pawn {
 
         ctx.font = '30px Arial';
         ctx.fillStyle = '#ffffff';
-        let symbolText = symbol == 0 ? 'O WON THE MATCH !' : symbol == 1 ? 'X WON THE MATCH !' : 'MATCH DRAW !';
+        let symbolText = symbol == -1 ? 'O WON THE MATCH !' : symbol == 1 ? 'X WON THE MATCH !' : 'MATCH DRAW !';
         ctx.fillText(symbolText, this.x, this.y - 5);
     }
 }

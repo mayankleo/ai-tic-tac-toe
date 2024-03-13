@@ -10,6 +10,7 @@ function animate() {
     if (board.createNew) {
         delete board;
         board = new Board(50, 50, myCanvas);
+        // board.controls.ai = JSON.parse(localStorage.getItem("bestBrain"));
     }
     board.draw(ctx);
     requestAnimationFrame(animate);
