@@ -85,6 +85,8 @@ class Controls {
     flip(index) {
         if (this.inputs[index] == 0) {
             this.inputs[index] = -1;
+            let algo = minimax(this.inputs, 1);
+            this.inputs[algo.index] = 1;
         }
 
         // const output = NeuralNetwork.feedForward(this.inputs, this.ai);
@@ -94,8 +96,6 @@ class Controls {
         //     this.inputs[outputIndex] = 1;
         // }
 
-        let algo = minimax(this.inputs, 1);
-        this.inputs[algo.index] = 1;
     }
 
     keyLocation(key) {
